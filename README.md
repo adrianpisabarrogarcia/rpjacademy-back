@@ -12,5 +12,6 @@ $ composer install
 ### Run an ebmeded server
 
 ```sh
+$ cd ./public
 $ php -S localhost:8888
 ```
