@@ -32,12 +32,3 @@ services:
       - "8081:80"
     depends_on:
       - mysql
-
-  post_startup:
-    image: docker/compose:1.29.2
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    command: ["up", "-d"]
-    entrypoint: ["docker-compose"]
-    depends_on:
-      - web
