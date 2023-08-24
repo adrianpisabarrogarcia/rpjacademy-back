@@ -7,7 +7,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 require_once __DIR__ . '/../models/course.model.php';
 
-
 $controllerPrincipalUrl = "/workshop";
 
 $app->get($controllerPrincipalUrl . '/all', function (Request $request, Response $response, $args) {
