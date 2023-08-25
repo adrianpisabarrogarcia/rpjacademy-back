@@ -6,16 +6,33 @@ class Course extends Model {
     protected $primaryKey = 'id';
     protected $fillable = [
         'name',
+        'slug',
+        'slogan',
         'description',
-        'price',
-        'imageUrl',
-        'isAvailable',
-        'category'
+        'duration',
+        'image1',
+        'image2',
+        'image3',
+        'image4',
+        'image5',
+        'video',
+        'dateStart',
+        'dateFinish',
+        'course',
+        'workshop',
+        'modality',
+        'contact',
+        'dateStartRegistration',
+        'dateFinishRegistration'
     ];
     protected $hidden = ['created_at', 'updated_at'];
     protected $casts = [
-        'isAvailable' => 'boolean',
-        'price' => 'double' //with 2 decimals
+        'dateStart' => 'date',
+        'dateFinish' => 'date',
+        'course' => 'boolean',
+        'workshop' => 'boolean',
+        'dateStartRegistration' => 'date',
+        'dateFinishRegistration' => 'date'
     ];
 
 }
