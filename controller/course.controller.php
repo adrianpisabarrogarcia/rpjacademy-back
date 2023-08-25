@@ -11,24 +11,24 @@ $controllerPrincipalUrl = "/course";
 
 
 $app->get($controllerPrincipalUrl . '/all', function (Request $request, Response $response, $args) {
-    $courses = Course::all();
-    if ($courses == null) {
+    $query = Course::where("course", true)->get();
+    if ($query == null || count($query) == 0) {
         $response->getBody()->write(json_encode(array("error" => "Courses not found")));
     } else {
         $response->withHeader('Content-Type', 'application/json');
-        $response->getBody()->write(json_encode(Course::all()));
+        $response->getBody()->write(json_encode($query));
     }
     return $response;
 });
 
 
 $app->get($controllerPrincipalUrl . '/{id}', callable: function (Request $request, Response $response, $args) {
-    $course = Course::find($args['id']);
-    if ($course == null) {
+    $query = Course::find($args['id']);
+    if ($query == null) {
         $response->getBody()->write(json_encode(array("error" => "Course not found")));
     } else {
         $response->withHeader('Content-Type', 'application/json');
-        $response->getBody()->write(json_encode($course));
+        $response->getBody()->write(json_encode($query));
     }
     return $response;
 });
