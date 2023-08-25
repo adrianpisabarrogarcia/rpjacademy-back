@@ -37,4 +37,9 @@ class Course extends Model
         'dateFinishRegistration' => 'date'
     ];
 
+    public function blocks()
+    {
+        return $this->hasMany(Block::class);
+    }
+
 }
