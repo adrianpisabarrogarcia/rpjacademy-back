@@ -44,7 +44,9 @@ class Course extends Model
 
     public function institutions()
     {
-        return $this->hasMany(Institution::class);
+        return $this->belongsToMany(Institution::class)
+            ->withPivot('convenes', 'certifies', 'collaborate', 'created_at', 'updated_at')
+            ->as('course_details');  // este es un alias opcional para los datos de la tabla pivot
     }
 
 }

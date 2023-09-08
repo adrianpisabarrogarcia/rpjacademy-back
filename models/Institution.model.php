@@ -10,10 +10,7 @@ class Institution extends Model
         'course_id',
         'name',
         'logo',
-        'description',
-        'convenes',
-        'certifies',
-        'collaborate'
+        'description'
     ];
     protected $hidden = ['created_at', 'updated_at'];
     protected $casts = [
@@ -22,8 +19,10 @@ class Institution extends Model
         'collaborate' => 'boolean'
     ];
 
-    public function course()
+    public function courses()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsToMany(Course::class)
+            ->withPivot('convenes', 'certifies', 'collaborate', 'created_at', 'updated_at')
+            ->as('institution_details'); // este es un alias opcional para los datos de la tabla pivot
     }
 }
