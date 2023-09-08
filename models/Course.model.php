@@ -42,4 +42,9 @@ class Course extends Model
         return $this->hasMany(Block::class);
     }
 
+    public function institutions()
+    {
+        return $this->hasMany(Institution::class);
+    }
+
 }
