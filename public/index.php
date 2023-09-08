@@ -8,16 +8,20 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $app = AppFactory::create();
 
+//Get .env variables
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->load();
+$dotenv->required(['DB_HOST', 'DB_NAME', 'DB_USER', 'DB_PASS']);
+
 //Eloquent configuration
 $capsule = new Capsule;
-
 $capsule->addConnection([
     'driver'    => 'mysql',
-    'host'      => '127.0.0.1',
+    'host'      => $_ENV['DB_HOST'],
     'port'      => '3306',
-    'database'  => 'redpjacademy',
-    'username'  => 'root',
-    'password'  => '',
+    'database'  => $_ENV['DB_NAME'],
+    'username'  => $_ENV['DB_USER'],
+    'password'  => $_ENV['DB_PASS'],
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
