@@ -3,14 +3,14 @@ namespace RPJAcademy\DAOs;
 use RPJAcademy\Interfaces\CourseDaoInterface;
 use RPJAcademy\Models\Course;
 
-class CourseDao implements CourseDaoInterface {
+class WorkshopDao implements CourseDaoInterface {
     public function find($entity)
     {
         return Course::with('blocks', 'institutions')->find($entity->id);
     }
     public function findAll()
     {
-        return Course::where("course", true)->get();
+        return Course::where("workshop", true)->get();
     }
     public function save($entity)
     {

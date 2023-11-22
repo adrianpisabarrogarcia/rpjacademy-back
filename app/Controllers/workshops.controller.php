@@ -1,18 +1,19 @@
 <?php
-
+namespace RPJAcademy\Controllers;
 global $app;
-
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
-
-require_once __DIR__ . '/../Models/Course.model.php';
-require_once __DIR__ . '/../Models/Block.model.php';
-require_once __DIR__ . '/../Models/Institution.model.php';
+use RPJAcademy\Models\Course;
+use RPJAcademy\DAOs\WorkshopDao;
 
 $controllerPath = "/workshops";
 
-$app->get($controllerPath, function (Request $request, Response $response, $args) {
-    $query = Course::where("workshop", true)->get();
+// TODO: pasar controlador a una clase
+
+
+$app->get($controllerPath, function (Request $request, Response $response) {
+    $workshopDao = new WorkshopDao();
+    $query = $workshopDao->findAll();
     if ($query == null || count($query) == 0) {
         $response->getBody()->write("Workshops not found");
         return $response->withStatus(404);

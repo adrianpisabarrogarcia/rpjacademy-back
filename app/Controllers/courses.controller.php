@@ -4,7 +4,7 @@ global $app;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use RPJAcademy\Models\Course;
-use RPJAcademy\DAOs\CourseDao as CourseDao;
+use RPJAcademy\DAOs\CourseDao;
 
 $controllerPath = "/courses";
 
