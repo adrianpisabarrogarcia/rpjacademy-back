@@ -1,14 +1,19 @@
 {
-    "require": {
-        "slim/slim": "4.*",
-        "slim/psr7": "^1.6",
-        "nyholm/psr7": "^1.8",
-        "nyholm/psr7-server": "^1.0",
-        "guzzlehttp/psr7": "^1",
-        "sapphirecat/slim4-http-interop-adapter": "^1.1",
-        "laminas/laminas-diactoros": "^3.0",
-        "tuupola/cors-middleware": "^1.4",
-        "illuminate/database": "^10.18",
-        "vlucas/phpdotenv": "^5.5"
+  "require": {
+    "slim/slim": "4.*",
+    "slim/psr7": "^1.6",
+    "nyholm/psr7": "^1.8",
+    "nyholm/psr7-server": "^1.0",
+    "guzzlehttp/psr7": "^1",
+    "sapphirecat/slim4-http-interop-adapter": "^1.1",
+    "laminas/laminas-diactoros": "^3.0",
+    "tuupola/cors-middleware": "^1.4",
+    "illuminate/database": "^10.18",
+    "vlucas/phpdotenv": "^5.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "RPJAcademy\\": "app/"
     }
+  }
 }

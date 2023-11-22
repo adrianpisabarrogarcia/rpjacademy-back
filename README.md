@@ -15,6 +15,13 @@ $ composer install
 $ cd ./public
 $ php -S localhost:8888
 ```
+
+## To start the framework with docker
+```sh
+$ docker-compose up -d
+```
+
+
 ## Api documentation example
 
 # API Endpoints and Controller Methods

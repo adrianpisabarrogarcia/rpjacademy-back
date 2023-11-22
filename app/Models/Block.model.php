@@ -1,5 +1,5 @@
 <?php
-
+namespace RPJAcademy\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Block extends Model
