@@ -47,7 +47,6 @@ $app->add(new CorsMiddleware([
 $app->setBasePath('/api');
 
 //Routes Controllers
-require_once __DIR__ . '/../app/Controllers/courses.controller.php';
-require_once __DIR__ . '/../app/Controllers/workshops.controller.php';
+require_once __DIR__ . '/../app/routes.php';
 
 $app->run();
