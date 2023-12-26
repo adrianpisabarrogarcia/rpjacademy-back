@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-09-2023 a las 20:14:19
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 7.2.34
+-- Tiempo de generación: 26-12-2023 a las 19:05:18
+-- Versión del servidor: 5.7.39-42-log
+-- Versión de PHP: 7.4.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,8 +34,8 @@ CREATE TABLE `block` (
   `sorting` int(255) NOT NULL,
   `description` longtext NOT NULL,
   `image` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -71,8 +71,8 @@ CREATE TABLE `course` (
   `contact` mediumtext NOT NULL,
   `dateStartRegistration` datetime(6) DEFAULT NULL,
   `dateFinishRegistration` datetime DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `slogan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -86,28 +86,48 @@ INSERT INTO `course` (`id`, `name`, `slug`, `description`, `duration`, `image1`,
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `course_institution`
+--
+
+CREATE TABLE `course_institution` (
+  `id` int(255) NOT NULL,
+  `course_id` int(255) NOT NULL,
+  `institution_id` int(255) NOT NULL,
+  `convenes` tinyint(1) NOT NULL DEFAULT '0',
+  `certifies` tinyint(1) NOT NULL DEFAULT '0',
+  `collaborate` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `course_institution`
+--
+
+INSERT INTO `course_institution` (`id`, `course_id`, `institution_id`, `convenes`, `certifies`, `collaborate`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 0, 1, 0, '2023-09-08 19:36:49', '2023-09-08 19:36:49');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `institution`
 --
 
 CREATE TABLE `institution` (
   `id` int(255) NOT NULL,
-  `course_id` int(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `logo` varchar(255) NOT NULL,
-  `description` mediumtext DEFAULT NULL,
-  `convenes` tinyint(1) DEFAULT NULL,
-  `certifies` tinyint(1) DEFAULT NULL,
-  `collaborate` tinyint(1) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `description` mediumtext,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `institution`
 --
 
-INSERT INTO `institution` (`id`, `course_id`, `name`, `logo`, `description`, `convenes`, `certifies`, `collaborate`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Red Pastoral Juvenil', 'http://localhost:8888/assets/images/institution/1.jpg', 'Somos una red de personas e instituciones especializada en acercar el evangelio a los jóvenes, acompañandolos a discernir, sin miedo a seguir a Jesús y avivir su propuesta de amor.', 1, 1, 0, '2023-08-25 13:50:19', '2023-08-25 13:50:19');
+INSERT INTO `institution` (`id`, `name`, `logo`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'Red Pastoral Juvenil', 'http://localhost:8888/assets/images/institution/1.jpg', 'Somos una red de personas e instituciones especializada en acercar el evangelio a los jóvenes, acompañandolos a discernir, sin miedo a seguir a Jesús y avivir su propuesta de amor. Hoy damos pasos en nuevas direcciones: la formación en pastoral juvenil, la evangelización digital.', '2023-09-08 19:36:09', '2023-09-08 19:36:09');
 
 --
 -- Índices para tablas volcadas
@@ -127,11 +147,18 @@ ALTER TABLE `course`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `course_institution`
+--
+ALTER TABLE `course_institution`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_course_fk` (`course_id`),
+  ADD KEY `id_intitution_fk` (`institution_id`);
+
+--
 -- Indices de la tabla `institution`
 --
 ALTER TABLE `institution`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_course_id_institution` (`course_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -147,6 +174,12 @@ ALTER TABLE `block`
 -- AUTO_INCREMENT de la tabla `course`
 --
 ALTER TABLE `course`
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `course_institution`
+--
+ALTER TABLE `course_institution`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
@@ -166,10 +199,11 @@ ALTER TABLE `block`
   ADD CONSTRAINT `id_block_id_course` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `institution`
+-- Filtros para la tabla `course_institution`
 --
-ALTER TABLE `institution`
-  ADD CONSTRAINT `id_course_id_institution` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `course_institution`
+  ADD CONSTRAINT `id_course_fk` FOREIGN KEY (`course_id`) REFERENCES `course` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `id_intitution_fk` FOREIGN KEY (`institution_id`) REFERENCES `institution` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
